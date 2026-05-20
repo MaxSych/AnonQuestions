@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <script th:src="@{/js/profile.js}"></script>
+</head>
+
+<body>
+
+<div id="askForm" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <h3>New question</h3>
+
+        <form th:action="@{/add}" method="post">
+            <input type="hidden" name="userName" th:value="${user.username}" />
+
+            <textarea id="questionInput" name="text" placeholder="Ask me a question" required></textarea>
+
+            <div class="ask-actions">
+                <button type="submit" class="btn-submit">Send</button>
+                <button type="button" class="btn-cancel" onclick="toggleAskForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="QForm" class="modal-overlay" style="display: none;">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h2>Unanswered Questions</h2>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="unansweredList">
+
+        </div>
+    </div>
+</div>
+
+<!--Here starts the main content -->
+
+<div class="header-section">
+    <div class="profile-card">
+        <h1 id="user-name" th:text="${user != null ? user?.displayName
+         : 'User not found'}">username</h1>
+        <p id="user-bio" th:text="${user?.bio}">User's bio will be here</p>
+    </div>
+    <div class="action-buttons">
+        <div sec:authorize="isAuthenticated()">
+            <div th:if="${#authentication?.name == user?.username}">
+                <button class="btn-main"onclick="openUnansweredQuestions()">Inbox</button>
+                <button sec:authorize="hasRole('ROLE_USER')"  class="btn-settings">⚙</button>
+            </div>
+        </div>
+        <div th:if="${#authentication?.name != user?.username}">
+            <button class="btn-main" onclick="toggleAskForm()">You have a question?</button>
+            <a  id="register-button" th:href="@{/register.html}" > Sign up </a>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<div class="main-content">
+    <div class="white-rectangle-container">
+        <div th:if="${posts == null or posts.empty}" style="text-align: center; padding: 20px;">
+            <p>No questions yet...</p>
+        </div>
+
+        <div th:each="post : ${posts}" class="post-item">
+            <div class="post-question" th:text="${post.question}">Question text</div>
+            <div th:if="${post.response != null}">
+                <div class="inner-divider"></div>
+                <div class="post-answer" th:text="${post.response}">Response</div>
+            <div class="creation-time" th:text="${post.createdAt}"> Time of creation</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

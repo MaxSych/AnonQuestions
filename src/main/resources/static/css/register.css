@@ -1,0 +1,201 @@
+/* 1. Basic page settings */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Important: so floating signs don't create scroll */
+}
+
+body {
+    background-color: #767c8d;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Depth for 3D form effect */
+}
+
+/* 2. Glass container (Glassmorphism) */
+.register-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05); /* Semi-transparent white */
+    backdrop-filter: blur(15px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Thin border */
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    position: relative;
+    color: white;
+}
+
+#h2-text{
+    font-family: montserrat;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #1F1D16;
+}
+
+/* 3. Input fields */
+.input-field {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 15px; /* Increased spacing for aesthetics */
+    box-sizing: border-box;
+    color: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+#bio-text{
+    resize: vertical;
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.input-field:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #4A90E2;
+}
+
+/* 4. Button */
+.btn-send {
+    width: 60%;
+    padding: 12px;
+    margin-top: 10px;
+    margin-left: 86px;
+    /* Glass effect for button */
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    /* Thin border so the button doesn't blend with the form */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.btn-send:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Press effect */
+.btn-send:active {
+    transform: translateY(1px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.already-account {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.already-account a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* 5. Mobile responsive styles */
+@media (max-width: 768px) {
+    /* Adjust glass card for mobile */
+    .register-form {
+        max-width: 90%;
+        padding: 25px 20px;
+        margin: 0 auto;
+    }
+
+    /* Smaller title */
+    .glass-card #h2-text {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    /* Adjust input fields */
+    .input-field {
+        padding: 10px;
+        font-size: 16px; /* Prevents zoom on iOS when focusing */
+        margin-bottom: 12px;
+    }
+
+    /* Fix button position */
+    .btn-send {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* Adjust spacing */
+    .already-account {
+        margin-top: 15px;
+        font-size: 12px;
+    }
+
+    /* Smaller padding for textarea */
+    #bio-text {
+        font-size: 16px;
+    }
+}
+
+/* For very small phones (up to 480px) */
+@media (max-width: 480px) {
+    .register-form {
+        max-width: 95%;
+        padding: 20px 15px;
+    }
+
+    .glass-card #h2-text {
+        font-size: 18px;
+    }
+
+    .input-field {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .btn-send {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/* Fix for landscape mode on phones */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .register-form {
+        padding: 15px 20px;
+    }
+
+    .glass-card #h2-text {
+        margin-bottom: 10px;
+    }
+
+    .input-field {
+        margin-bottom: 8px;
+        padding: 6px;
+    }
+}

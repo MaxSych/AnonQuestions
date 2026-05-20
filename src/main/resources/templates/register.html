@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Registration | Future UI</title>
+
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+
+
+<div class="scene">
+
+
+    <div class="glass-card" >
+
+        <form action="/register" method="post">
+            <h2 id="h2-text">Registration</h2>
+            <div id="registerForm" class="register-form">
+                <input type="text" name="username" placeholder="Username" class="input-field" required>
+                <input type="email" name="email" placeholder="Email address" class="input-field" required>
+                <input type="password" name="password" placeholder="Password" class="input-field" required>
+                <input type="password" name="confirmpassword" placeholder="Repeat password" class="input-field" required>
+                <textarea id="bio-text" name="bio" placeholder="A few words about yourself" class="input-field"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-send">Send</button>
+            </div>
+        </form>
+        <div class="already-account">
+            Already have an account? <a href="main">Log in</a>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+
+<script src="../js/register.js"></script>
+</body>
+</html>

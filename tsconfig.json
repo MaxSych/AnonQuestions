@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ESNext",
+    "lib": ["ES2015", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./src/main/resources/static/js",
+    "rootDir": "./src/main/resources/static/ts",  // ← Исправлено: где лежат ts файлы
+    "moduleResolution": "node",
+    "allowJs": true
+  },
+  "include": ["src/main/resources/static/ts/**/*.ts"],  // ← Исправлено: путь к ts файлам
+  "exclude": ["node_modules"]
+}

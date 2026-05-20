@@ -1,0 +1,25 @@
+{
+  "name": "anonquestions",
+  "version": "1.0.0",
+  "description": "Tech Stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxSych/AnonQuestions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MaxSych/AnonQuestions/issues"
+  },
+  "homepage": "https://github.com/MaxSych/AnonQuestions#readme",
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "typescript": "^5.9.3"
+  }
+}
