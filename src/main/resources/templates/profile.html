@@ -6,13 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" th:href="@{/css/inbox-modal.css}">
     <script th:src="@{/js/profile.js}"></script>
+    <script th:src="@{/js/inbox.js}"></script>
 </head>
 
 <body>
 
-<div id="askForm" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
+<div id="modalWindow" class="modalWindow"  style="display: none;">
+    <div id="question-form">
         <h3>New question</h3>
 
         <form th:action="@{/add}" method="post">
@@ -26,19 +28,42 @@
             </div>
         </form>
     </div>
+
 </div>
-
-<div id="QForm" class="modal-overlay" style="display: none;">
-    <div class="modal-content modal-large">
-        <div class="modal-header">
-            <h2>Unanswered Questions</h2>
-            <button class="close-btn" onclick="closeModal()">&times;</button>
+<div id="inboxModalWindow" class="modalWindow-inbox" style="display: none;">
+    <div id="inbox-form">
+        <div class="inbox-header">
+            <h2>📬 Unanswered Questions</h2>
+            <button class="close-btn" onclick="closeInboxModal()">&times;</button>
         </div>
-        <div id="unansweredList">
 
+        <div class="inbox-content">
+            <div id="inboxQuestionsList" class="questions-list">
+                <div th:each="questionText : ${unanswered}" class="question-item">
+                    <p class="question-text" th:text="${questionText}">Question text</p>
+
+                    <button class="btn-open-answer">Answer</button>
+                </div>
+
+                <p th:if="${#lists.isEmpty(unanswered)}">No questions yet.</p>
+            </div>
+
+            <div id="answerSection" class="answer-section-wrapper" style="display: none;">
+                <div class="answer-section">
+                    <h3>✍️ Write an answer</h3>
+                    <textarea id="answerText" class="answer-textarea" placeholder="Type your answer here..."></textarea>
+                    <div class="answer-actions">
+                        <button class="btn-cancel-answer" onclick="cancelAnswer()">Cancel</button>
+                        <button class="btn-submit-answer" onclick="submitAnswer()">Send answer</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!--Here starts the main content -->
 
@@ -48,10 +73,10 @@
          : 'User not found'}">username</h1>
         <p id="user-bio" th:text="${user?.bio}">User's bio will be here</p>
     </div>
-    <div class="action-buttons">
+    <div class="main-buttons">
         <div sec:authorize="isAuthenticated()">
             <div th:if="${#authentication?.name == user?.username}">
-                <button class="btn-main"onclick="openUnansweredQuestions()">Inbox</button>
+                <button class="btn-main"onclick="openInboxModal()">Inbox</button>
                 <button sec:authorize="hasRole('ROLE_USER')"  class="btn-settings">⚙</button>
             </div>
         </div>
@@ -68,7 +93,7 @@
 
 
 <div class="main-content">
-    <div class="white-rectangle-container">
+    <div class="posts-section">
         <div th:if="${posts == null or posts.empty}" style="text-align: center; padding: 20px;">
             <p>No questions yet...</p>
         </div>
@@ -78,7 +103,7 @@
             <div th:if="${post.response != null}">
                 <div class="inner-divider"></div>
                 <div class="post-answer" th:text="${post.response}">Response</div>
-            <div class="creation-time" th:text="${post.createdAt}"> Time of creation</div>
+                <div class="creation-time" th:text="${post.createdAt}"> Time of creation</div>
             </div>
         </div>
     </div>

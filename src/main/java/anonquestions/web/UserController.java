@@ -4,6 +4,7 @@ import anonquestions.entity.Post;
 import anonquestions.User;
 import anonquestions.data.PostRepository;
 import anonquestions.data.UserRepository;
+import anonquestions.service.AnsweringService;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+
 
     UserController(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
@@ -32,7 +34,7 @@ public class UserController {
 
 
 
-        model.addAttribute("posts", userFromDb.getPosts());
+        model.addAttribute("posts", postRepository.findByUserIdAndIsAnsweredTrue(userFromDb.getId()));
         model.addAttribute("user", userFromDb);
 
 

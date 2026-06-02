@@ -1,59 +1,68 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-function openUnansweredQuestions() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const overlay = document.getElementById('QForm');
-        const listContainer = document.getElementById('unansweredList');
+// Переменные для хранения состояния
+let currentQuestionId = null;
 
-        const response = yield fetch('/api/questions/unanswered');
-        const questions = yield response.json();
+// Открытие модального окна Inbox
+function openInboxModal() {
+    const modal = document.getElementById('inboxModalWindow');
+    modal.style.display = 'block';
+    document.getElementById('answerSection').style.display = 'none';
+    currentQuestionId = null;
+    fetchUnansweredQuestions();
+}
 
-        listContainer.innerHTML = '';
-        questions.forEach(post => {
-            const item = document.createElement('div');
-            item.className = 'question-item';
-            item.innerHTML = `
-            <p>${post.question}</p>
-            <textarea id="answer-${post.id}" placeholder="Your answer..."></textarea>
-            <div class="actions">
-                <button onclick="submitAnswer(${post.id})">✅ Answer</button>
-                <button onclick="deleteQuestion(${post.id})" class="btn-delete">🗑️ Delete</button>
-            </div>
-        `;
-            listContainer.appendChild(item);
+// Закрытие модального окна Inbox
+function closeInboxModal() {
+    const modal = document.getElementById('inboxModalWindow');
+    modal.style.display = 'none';
+    document.getElementById('answerSection').style.display = 'none';
+    currentQuestionId = null;
+}
+
+// Закрытие при клике на фон
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('inboxModalWindow');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeInboxModal();
+            }
         });
-        overlay.style.display = 'flex';
-    });
+    }
+});
+
+
+
+// Показать форму ответа
+function showAnswerForm(questionId) {
+    currentQuestionId = questionId;
+    const answerSection = document.getElementById('answerSection');
+    if (answerSection) {
+        answerSection.style.display = 'block';
+    }
+    const answerText = document.getElementById('answerText');
+    if (answerText) {
+        answerText.value = '';
+    }
+
+    // Прокрутка к форме ответа
+    answerSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-function submitAnswer(postId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const text = document.getElementById(`answer-${postId}`).value;
-        yield fetch(`/api/questions/${postId}/answer`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ answer: text })
-        });
-        alert('Answered!');
-        openUnansweredQuestions();
-    });
+
+// Отмена ответа
+function cancelAnswer() {
+    const answerSection = document.getElementById('answerSection');
+    if (answerSection) {
+        answerSection.style.display = 'none';
+    }
+    currentQuestionId = null;
 }
-function deleteQuestion(postId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (confirm('Are you sure?')) {
-            yield fetch(`/api/questions/${postId}`, { method: 'DELETE' });
-            openUnansweredQuestions();
-        }
-    });
+
+
+// Вспомогательная функция для экранирования HTML
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
-function closeModal() {
-    const overlay = document.getElementById('QForm');
-    overlay.style.display = 'none';
-}
-export {};
+

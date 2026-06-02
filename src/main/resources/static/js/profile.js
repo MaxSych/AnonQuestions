@@ -1,5 +1,5 @@
 function toggleAskForm() {
-    const modal = document.getElementById('askForm');
+    const modal = document.getElementById('modalWindow');
     if (modal.style.display === 'none' || modal.style.display === '') {
         modal.style.display = 'block';
     } else {
@@ -8,7 +8,7 @@ function toggleAskForm() {
 }
 
 
-document.getElementById('askForm').addEventListener('click', function(e) {
+document.getElementById('modalWindow').addEventListener('click', function(e) {
     if (e.target === this) {
         toggleAskForm();
     }

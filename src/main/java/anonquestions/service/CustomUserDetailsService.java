@@ -2,7 +2,7 @@ package anonquestions.service;
 
 
 
-import anonquestions.User;
+
 import anonquestions.data.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
