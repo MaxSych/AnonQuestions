@@ -2,12 +2,16 @@ package anonquestions.web;
 
 import anonquestions.data.UserRepository;
 import anonquestions.service.QuestionsService;
+import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+
 
 @Controller
 public class QuestionsController {
@@ -21,9 +25,13 @@ public class QuestionsController {
     }
 
     @PostMapping("/add")
-    public String addQuestion(@RequestParam("text") String questionText, @RequestParam("userName") String userName) {
+    public String addQuestion(@RequestParam("text") String questionText, @RequestParam("userName") String userName, RedirectAttributes redirectAttributes) {
 
+        if (questionText == null || questionText.trim().length() < 5) {
 
+            redirectAttributes.addFlashAttribute("errorMessage", "Text is too short!");
+            return "redirect:/profile/" + userName;
+        }
 
         questionsService.addQuestion( questionText, userName);
 

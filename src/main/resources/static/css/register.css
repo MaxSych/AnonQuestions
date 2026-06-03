@@ -117,7 +117,7 @@ body {
 @media (max-width: 768px) {
     /* Adjust glass card for mobile */
     .register-form {
-        max-width: 90%;
+        max-width: 60%;
         padding: 25px 20px;
         margin: 0 auto;
     }
@@ -137,7 +137,7 @@ body {
 
     /* Fix button position */
     .btn-send {
-        width: 80%;
+        width: 66%;
         margin-left: auto;
         margin-right: auto;
         display: block;
@@ -160,7 +160,7 @@ body {
 /* For very small phones (up to 480px) */
 @media (max-width: 480px) {
     .register-form {
-        max-width: 95%;
+        max-width: 60%;
         padding: 20px 15px;
     }
 
@@ -174,7 +174,7 @@ body {
     }
 
     .btn-send {
-        width: 100%;
+        width: 66%;
         padding: 10px;
     }
 }
@@ -188,6 +188,7 @@ body {
 
     .register-form {
         padding: 15px 20px;
+        max-width: 60%;
     }
 
     .glass-card #h2-text {
