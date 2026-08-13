@@ -20,9 +20,9 @@ public class AnsweringService {
         this.postRepository = postRepository;
     }
 
-    public List<String> getOnlyUnansweredQuestions(String username) {
+    public List<String> getUnansweredPosts(String username) {
         User user;
-        List<String> UnansweredQuestions  = new ArrayList<>();
+        List<String> unansweredQuestions  = new ArrayList<>();
         user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -30,13 +30,12 @@ public class AnsweringService {
         Long UserId = user.getId();
         List<Post> rawPosts = postRepository.findByUserId(UserId);
 
-        for (Post post : rawPosts){
-            if(post.getIsAnswered() == false){
-                UnansweredQuestions.add(String.valueOf(post));
+        for (Post post : rawPosts) {
+            if (Boolean.FALSE.equals(post.getIsAnswered())) {
+                unansweredQuestions.add(post.getQuestion());
             }
         }
 
-        return UnansweredQuestions ;
-
+        return unansweredQuestions;
     }
 }

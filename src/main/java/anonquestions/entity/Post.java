@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -19,7 +19,7 @@ public class Post {
     private Long id;
 
     @CreationTimestamp()
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Size(min = 5, max = 100)
     private String question;

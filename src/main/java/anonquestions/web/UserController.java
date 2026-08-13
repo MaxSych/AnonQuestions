@@ -10,17 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final AnsweringService answeringService;
 
 
-    UserController(UserRepository userRepository, PostRepository postRepository) {
+    UserController(UserRepository userRepository, PostRepository postRepository, AnsweringService answeringService) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
-    }
+        this.answeringService = answeringService;    }
 
     @GetMapping("/profile/{username}")
     public String showProfile(Model model, @PathVariable String username) {
@@ -37,6 +40,8 @@ public class UserController {
         model.addAttribute("posts", postRepository.findByUserIdAndIsAnsweredTrue(userFromDb.getId()));
         model.addAttribute("user", userFromDb);
 
+        List<String> unanswered = answeringService.getUnansweredPosts(username);
+        model.addAttribute("unanswered", unanswered);
 
 
         return "profile";
