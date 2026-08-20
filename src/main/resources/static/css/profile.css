@@ -79,7 +79,6 @@ body {
 .main-buttons {
     flex-grow: 1;
     display: flex;
-    justify-content: center;
     align-items: flex-start;
     margin: 0 60px;
     margin-top: 0 !important;
@@ -114,11 +113,14 @@ body {
     background-color: #767c8d;
     color: white;
     border: none;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 20px;
+    margin-left: auto;
+    transform: translateX(1440px);
+    margin-top: 5px;
 }
 
 /* Main Section */

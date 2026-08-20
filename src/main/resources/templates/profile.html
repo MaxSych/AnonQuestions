@@ -7,8 +7,10 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/profile.css}">
     <link rel="stylesheet" th:href="@{/css/inbox-modal.css}">
+    <link rel="stylesheet" th:href="@{/css/settings-modal.css}">
     <script th:src="@{/js/profile.js}"></script>
     <script th:src="@{/js/inbox.js}"></script>
+    <script th:src="@{/js/settings.js}"></script>
 </head>
 
 <body>
@@ -65,6 +67,9 @@
 
 
 
+
+
+
 <!--Here starts the main content -->
 
 <div class="header-section">
@@ -110,6 +115,13 @@
 </div>
 
 
+<dialog id="settingsWindow">
+    <h2>Settings</h2>
+    <div class="options">
+        <button type="button">Log out</button>
+    </div>
+    <button type="button" id="closeBtn" class="close-btn">Close</button>
+</dialog>
 
 </body>
 </html>
