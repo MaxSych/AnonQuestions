@@ -29,7 +29,7 @@
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 0;
-    overflow: hidden;
+    overflow: hidden; /* Prevents outer modal scrollbars */
     animation: fadeIn 0.3s ease-out;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -52,44 +52,34 @@
     font-weight: 600;
 }
 
-.close-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: white;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.close-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: rotate(90deg);
-}
 
 .inbox-content {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
 }
 
-
-
-
-
+.question-item{
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 15px;
+    box-sizing: border-box;display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+}
 
 
 .question-date {
@@ -104,8 +94,7 @@
     word-wrap: break-word;
 }
 
-.answer-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.btn-answer {
     color: white;
     border: none;
     padding: 8px 20px;
@@ -114,12 +103,37 @@
     font-size: 13px;
     font-weight: 500;
     transition: all 0.2s;
+    /* From https://css.glass */
+    background: rgba(158, 221, 148, 0.26);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(11.9px);
+    -webkit-backdrop-filter: blur(11.9px);
+    border: 1px solid rgba(75, 156, 47, 0.3);
 }
 
-.answer-btn:hover {
+.btn-answer:hover {
     transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
+
+.btn-delete{
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    /* From https://css.glass */
+    background: rgba(255, 65, 65, 0.26);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(11.9px);
+    -webkit-backdrop-filter: blur(11.9px);
+    border: 1px solid rgba(75, 156, 47, 0.3);
+}
+
 
 .answer-section-wrapper {
     margin-top: 20px;

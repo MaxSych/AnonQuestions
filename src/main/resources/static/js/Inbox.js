@@ -1,7 +1,7 @@
-// Переменные для хранения состояния
+// Variables for storing state
 let currentQuestionId = null;
 
-// Открытие модального окна Inbox
+// Open the modal window
 function openInboxModal() {
     const modal = document.getElementById('inboxModalWindow');
     modal.style.display = 'block';
@@ -10,7 +10,7 @@ function openInboxModal() {
     fetchUnansweredQuestions();
 }
 
-// Закрытие модального окна Inbox
+// Close the modal window
 function closeInboxModal() {
     const modal = document.getElementById('inboxModalWindow');
     modal.style.display = 'none';
@@ -18,7 +18,7 @@ function closeInboxModal() {
     currentQuestionId = null;
 }
 
-// Закрытие при клике на фон
+// Close the modal window when clicking outside of it
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('inboxModalWindow');
     if (modal) {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Показать форму ответа
+//Show the answer section
 function showAnswerForm(questionId) {
     currentQuestionId = questionId;
     const answerSection = document.getElementById('answerSection');
@@ -44,7 +44,7 @@ function showAnswerForm(questionId) {
         answerText.value = '';
     }
 
-    // Прокрутка к форме ответа
+    // Scroll to the answer section
     answerSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -58,7 +58,7 @@ function cancelAnswer() {
 }
 
 
-// Вспомогательная функция для экранирования HTML
+// A helper function for HTML escaping
 function escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
@@ -66,3 +66,22 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+
+// Function for deleting a question from an inbox
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('btn-delete')) {
+        const questionItem = e.target.closest('.question-item');
+        const questionId = e.target.dataset.id;
+
+        if (!questionItem || !questionId) return;
+
+        fetch(`/posts/${questionId}/delete`, {
+            method: 'POST'
+        })
+            .then(response => {
+                if (response.ok) {
+                    questionItem.remove(); // We delete the element only if the server responds successfully
+                }
+            });
+    }
+});

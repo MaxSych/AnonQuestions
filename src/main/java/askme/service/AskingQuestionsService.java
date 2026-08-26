@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class QuestionsService {
+public class AskingQuestionsService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public QuestionsService(PostRepository postRepository, UserRepository userRepository) {
+    public AskingQuestionsService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
     }

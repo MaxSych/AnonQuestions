@@ -31,20 +31,23 @@
         </form>
     </div>
 
+    <!--Inbox modal window start -->
 </div>
 <div id="inboxModalWindow" class="modalWindow-inbox" style="display: none;">
     <div id="inbox-form">
         <div class="inbox-header">
             <h2>📬 Unanswered Questions</h2>
-            <button class="close-btn" onclick="closeInboxModal()">&times;</button>
         </div>
 
         <div class="inbox-content">
             <div id="inboxQuestionsList" class="questions-list">
-                <div th:each="questionText : ${unanswered}" class="question-item">
-                    <p class="question-text" th:text="${questionText}">Question text</p>
+                <div th:each="InboxResponseItem : ${unanswered}" class="question-item">
+                    <p class="question-text" th:text="${InboxResponseItem.content}">Question text</p>
+                    <div class="question-actions">
+                        <button type="button" class="btn-answer">Answer</button>
 
-                    <button class="btn-open-answer">Answer</button>
+                        <button type="button" class="btn-delete" th:data-id="${InboxResponseItem.id()}">Delete</button>
+                    </div>
                 </div>
 
                 <p th:if="${#lists.isEmpty(unanswered)}">No questions yet.</p>
@@ -64,13 +67,13 @@
     </div>
 </div>
 
+<!--Inbox modal window end -->
 
 
 
 
 
-
-<!--Here starts the main content -->
+<!--Header start -->
 
 <div class="header-section">
     <div class="profile-card">
@@ -90,12 +93,9 @@
             <a  id="register-button" th:href="@{/register.html}" > Sign up </a>
         </div>
     </div>
-
-
-
 </div>
 
-
+<!--Header end -->
 
 <div class="main-content">
     <div class="posts-section">
@@ -118,9 +118,11 @@
 <dialog id="settingsWindow">
     <h2>Settings</h2>
     <div class="options">
-        <button type="button">Log out</button>
+        <form th:action="@{/logout}" method="post">
+        <button type="submit">Log out</button>
+            </form>
     </div>
-    <button type="button" id="closeBtn" class="close-btn">Close</button>
+    <button type="submit" id="closeBtn" class="close-btn">Close</button>
 </dialog>
 
 </body>

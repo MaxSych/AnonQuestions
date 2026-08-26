@@ -1,10 +1,12 @@
 package askme.web;
 
+import askme.dto.response.InboxResponse;
 import askme.entity.Post;
 import askme.User;
 import askme.data.PostRepository;
 import askme.data.UserRepository;
-import askme.service.AnsweringService;
+import askme.service.QuestionsPopInInboxService;
+import askme.mapper.InboxMapper;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +19,15 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-    private final AnsweringService answeringService;
+    private final QuestionsPopInInboxService answeringService;
+    private final InboxMapper inboxMapper;
 
 
-    UserController(UserRepository userRepository, PostRepository postRepository, AnsweringService answeringService) {
+    UserController(UserRepository userRepository, PostRepository postRepository, QuestionsPopInInboxService answeringService, InboxMapper inboxMapper) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
-        this.answeringService = answeringService;    }
+        this.answeringService = answeringService;
+        this.inboxMapper = inboxMapper;}
 
     @GetMapping("/profile/{username}")
     public String showProfile(Model model, @PathVariable String username) {
@@ -40,7 +44,7 @@ public class UserController {
         model.addAttribute("posts", postRepository.findByUserIdAndIsAnsweredTrue(userFromDb.getId()));
         model.addAttribute("user", userFromDb);
 
-        List<String> unanswered = answeringService.getUnansweredPosts(username);
+        List<InboxResponse> unanswered = inboxMapper.toInboxPostResponseList(answeringService.getUnansweredPosts(username));
         model.addAttribute("unanswered", unanswered);
 
 
