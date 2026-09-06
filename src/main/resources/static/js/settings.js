@@ -27,6 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     } else {
-        console.error('Один или несколько элементов не найдены в DOM!');
+        console.error('One or more elements were not found in the DOM!');
     }
 });

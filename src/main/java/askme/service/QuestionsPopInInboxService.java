@@ -49,4 +49,13 @@ public class QuestionsPopInInboxService {
         }
         return false;
     }
+    @Transactional
+    public void answerQuestion( String answerText, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+
+        post.setResponse(answerText);
+        post.setIsAnswered(true);
+
+    }
 }

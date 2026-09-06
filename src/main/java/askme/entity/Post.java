@@ -6,8 +6,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Entity
 @Data
@@ -19,7 +21,11 @@ public class Post {
     private Long id;
 
     @CreationTimestamp()
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "answered_at")
+    private LocalDate answeredAt;
 
     @Size(min = 5, max = 100)
     private String question;

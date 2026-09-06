@@ -41,12 +41,12 @@
 
         <div class="inbox-content">
             <div id="inboxQuestionsList" class="questions-list">
-                <div th:each="InboxResponseItem : ${unanswered}" class="question-item">
-                    <p class="question-text" th:text="${InboxResponseItem.content}">Question text</p>
+                <div th:each="InboxAnswerItem : ${unanswered}" class="question-item">
+                    <p class="question-text" th:text="${InboxAnswerItem.content}">Question text</p>
                     <div class="question-actions">
-                        <button type="button" class="btn-answer">Answer</button>
+                        <button type="button" class="btn-answer" th:onclick="|openInboxAnswerForm('${InboxAnswerItem.id()}')|">Answer</button>
 
-                        <button type="button" class="btn-delete" th:data-id="${InboxResponseItem.id()}">Delete</button>
+                        <button type="button" class="btn-delete" th:data-id="${InboxAnswerItem.id()}">Delete</button>
                     </div>
                 </div>
 
@@ -55,7 +55,10 @@
 
             <div id="answerSection" class="answer-section-wrapper" style="display: none;">
                 <div class="answer-section">
-                    <h3>✍️ Write an answer</h3>
+                    <h3>✍ Area for your respond</h3>
+
+                    <input type="hidden" id="currentQuestionId" value="">
+
                     <textarea id="answerText" class="answer-textarea" placeholder="Type your answer here..."></textarea>
                     <div class="answer-actions">
                         <button class="btn-cancel-answer" onclick="cancelAnswer()">Cancel</button>
@@ -109,7 +112,11 @@
                 <div class="inner-divider"></div>
                 <div class="post-answer" th:text="${post.response}">Response</div>
                 <div class="creation-time" th:text="${post.createdAt}"> Time of creation</div>
+                <div th:if="${#authentication?.name == user?.username}">
+                    <button sec:authorize="hasRole('ROLE_USER')" class="btn-delete-post">...</button>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

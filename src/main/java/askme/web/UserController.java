@@ -36,10 +36,6 @@ public class UserController {
         User userFromDb = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Post post = new Post();
-        post.setUser(userFromDb);
-
-
 
         model.addAttribute("posts", postRepository.findByUserIdAndIsAnsweredTrue(userFromDb.getId()));
         model.addAttribute("user", userFromDb);
