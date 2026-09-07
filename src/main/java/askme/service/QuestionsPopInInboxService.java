@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
 
+import org.springframework.security.access.AccessDeniedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,6 @@ public class QuestionsPopInInboxService {
         user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-
         Long UserId = user.getId();
         List<Post> rawPosts = postRepository.findByUserId(UserId);
 
@@ -42,7 +43,13 @@ public class QuestionsPopInInboxService {
     }
 
     @Transactional
-    public boolean deleteInboxPost(Long id) {
+    public boolean deleteInboxPost(Long id, Long UserId) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+
+        if (!post.getUser().getId().equals(UserId)) {
+            throw new AccessDeniedException("You are not allowed to delete this post");
+        }
         if (postRepository.existsById(id)) {
             postRepository.deleteById(id);
             return true;

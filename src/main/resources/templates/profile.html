@@ -31,7 +31,7 @@
         </form>
     </div>
 
-    <!--Inbox modal window start -->
+    <!--Inbox questions window start -->
 </div>
 <div id="inboxModalWindow" class="modalWindow-inbox" style="display: none;">
     <div id="inbox-form">
@@ -112,8 +112,13 @@
                 <div class="inner-divider"></div>
                 <div class="post-answer" th:text="${post.response}">Response</div>
                 <div class="creation-time" th:text="${post.createdAt}"> Time of creation</div>
-                <div th:if="${#authentication?.name == user?.username}">
-                    <button sec:authorize="hasRole('ROLE_USER')" class="btn-delete-post">...</button>
+                <div th:if="${#authentication?.name == user?.username}" class="post-menu-container">
+                    <button sec:authorize="hasRole('ROLE_USER')" class="btn-post-options">...</button>
+                    <div id="post-options-dropdown" class="post-options-dropdown">
+                        <button type="button" class="" data-value="tech">
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </div>
 

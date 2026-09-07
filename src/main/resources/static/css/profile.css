@@ -148,6 +148,22 @@ body {
     font-style: italic;
 }
 
+.post-options-dropdown {
+    display: none;
+    position: absolute;
+    top: 10px;
+    width: 50px;
+    right: 0;
+    margin-top: 4px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    z-index: 100;
+}
+
+
+.post-options-dropdown.show {
+    display: block;
+}
 
 
 .modalWindow {
@@ -257,7 +273,7 @@ body {
     right: 0;
 }
 
-.btn-delete-post {
+.btn-post-options {
     position: absolute;
     top: 1px;
     right: 18px;

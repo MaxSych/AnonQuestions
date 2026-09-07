@@ -1,8 +1,10 @@
 package askme.web;
 
+import askme.User;
 import askme.service.AskingQuestionsService;
 import askme.service.QuestionsPopInInboxService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +38,8 @@ public class QuestionsController {
     }
 
     @PostMapping("/posts/{id}/delete")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long id){
-        questionsPopInInboxService.deleteInboxPost(id);
+    public ResponseEntity<Void> deleteQuestion(@PathVariable Long id, @AuthenticationPrincipal User user){
+        questionsPopInInboxService.deleteInboxPost(id, user.getId());
         return ResponseEntity.noContent().build();
 
     }
