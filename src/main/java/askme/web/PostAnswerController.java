@@ -1,6 +1,6 @@
 package askme.web;
 
-import askme.service.QuestionsPopInInboxService;
+import askme.service.QuestionsLifecycleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +9,10 @@ import java.util.Map;
 @RestController
 public class PostAnswerController {
 
-    private final QuestionsPopInInboxService questionsPopInInboxService;
+    private final QuestionsLifecycleService questionsLifecycleService;
 
-    public PostAnswerController(QuestionsPopInInboxService questionsPopInInboxService) {
-        this.questionsPopInInboxService = questionsPopInInboxService;
+    public PostAnswerController(QuestionsLifecycleService questionsLifecycleService) {
+        this.questionsLifecycleService = questionsLifecycleService;
     }
 
     @PostMapping("/posts/{postId}/answer")
@@ -23,7 +23,7 @@ public class PostAnswerController {
         String answerText = body.get("answer");
 
 
-        questionsPopInInboxService.answerQuestion(answerText, postId);
+        questionsLifecycleService.answerQuestion(answerText, postId);
 
 
         return ResponseEntity.ok().build();

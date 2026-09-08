@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Hind+Madurai:wght@400;600&display=swap');
+
+
 body {
     background: linear-gradient(1140deg, #807282 4%, #767c8d 100%);
     font-family: Arial, sans-serif;
@@ -11,13 +14,13 @@ body {
     color: #FFFFFF;;
     font-size: 24px;
     margin-bottom: 30px;
-    font-family: Hind madurai;
+    font-family: "Hind Madurai", sans-serif;
 }
 
 #user-bio {
     margin: 30px;
     color: rgba(255, 255, 255, 0.75);
-    font-family: Lora;
+    font-family: "Lora", serif;
 }
 
 #register-button {
@@ -135,7 +138,7 @@ body {
 
 .post-question {
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 1.1rem;
     margin-left: 7px;
     margin-bottom: 6px;

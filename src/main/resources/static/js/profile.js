@@ -7,7 +7,8 @@ function toggleAskForm() {
     }
 }
 
- modalWindow = document.getElementById('modalWindow');
+ const modalWindow = document.getElementById('modalWindow');
+
 if (modalWindow) {
     modalWindow.addEventListener('click', function(e) {
         if (e.target === this) {
@@ -16,7 +17,7 @@ if (modalWindow) {
     });
 }
 
-// 2. Menu ...
+
 document.addEventListener('click', function (e) {
     const btn = e.target.closest('.btn-post-options');
 
@@ -39,4 +40,25 @@ document.addEventListener('click', function (e) {
     document.querySelectorAll('.post-options-dropdown').forEach(d => {
         d.style.display = 'none';
     });
+});
+
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.btn-post-delete');
+
+    if (!btn) return;
+
+    const postItem = btn.closest('.post-item');
+    const postId = btn.dataset.id;
+
+    if (!postItem || !postId) return;
+
+    fetch(`/questions/${postId}/delete`, {
+        method: 'POST'
+    })
+        .then(response => {
+            if (response.ok) {
+                postItem.remove();
+            }
+            });
+
 });

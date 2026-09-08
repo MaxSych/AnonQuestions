@@ -1,17 +1,17 @@
 package askme.mapper;
 
-import askme.entity.Post;
+import askme.entity.Question;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface PostMapper {
+public interface QuestionMapper {
 
-    default String toQuestionText(Post post) {
+    default String toQuestionText(Question post) {
         return post != null ? post.getQuestion() : null;
     }
 
-    List<String> toQuestionTexts(List<Post> posts);
+    List<String> toQuestionTexts(List<Question> posts);
 
 }

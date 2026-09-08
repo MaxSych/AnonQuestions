@@ -1,9 +1,9 @@
 package askme.service;
 
 import askme.User;
-import askme.data.PostRepository;
+import askme.data.QuestionRepository;
 import askme.data.UserRepository;
-import askme.entity.Post;
+import askme.entity.Question;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AskingQuestionsService {
 
-    private final PostRepository postRepository;
+    private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
 
-    public AskingQuestionsService(PostRepository postRepository, UserRepository userRepository) {
-        this.postRepository = postRepository;
+    public AskingQuestionsService(QuestionRepository postRepository, UserRepository userRepository) {
+        this.questionRepository = postRepository;
         this.userRepository = userRepository;
     }
     @Transactional
@@ -30,10 +30,10 @@ public class AskingQuestionsService {
                     return new RuntimeException("User not found: " + userName);
                 });
 
-        Post post = new Post();
+        Question post = new Question();
         post.setQuestion(questionText);
         post.setUser(receiver);
-        postRepository.save(post);
+        questionRepository.save(post);
 
         log.info("Question successfully saved for user: {}. Post ID: {}", userName, post.getId());
     }

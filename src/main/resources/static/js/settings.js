@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closeBtn');
 
     if (openBtn && dialog && closeBtn) {
-        // 1. Window open
         openBtn.addEventListener('click', () => {
             dialog.showModal();
         });
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dialog.close();
         });
 
-        // 2. backdrop
+
         dialog.addEventListener('click', (e) => {
             const rect = dialog.getBoundingClientRect();
             const isInDialog = (

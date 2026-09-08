@@ -2,7 +2,7 @@ package askme.web;
 
 import askme.User;
 import askme.service.AskingQuestionsService;
-import askme.service.QuestionsPopInInboxService;
+import askme.service.QuestionsLifecycleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,12 +15,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class QuestionsController {
 
-    private final QuestionsPopInInboxService questionsPopInInboxService;
+    private final QuestionsLifecycleService questionsLifecycleService;
     private final AskingQuestionsService askingQuestionsService;
 
-    public QuestionsController(AskingQuestionsService questionsService,QuestionsPopInInboxService questionsPopInInboxService){
+    public QuestionsController(AskingQuestionsService questionsService, QuestionsLifecycleService questionsLifecycleService){
         this.askingQuestionsService = questionsService;
-        this.questionsPopInInboxService = questionsPopInInboxService;
+        this.questionsLifecycleService = questionsLifecycleService;
     }
 
     @PostMapping("/add")
@@ -37,9 +37,9 @@ public class QuestionsController {
         return "redirect:/profile/" + userName;
     }
 
-    @PostMapping("/posts/{id}/delete")
+    @PostMapping("/questions/{id}/delete")
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id, @AuthenticationPrincipal User user){
-        questionsPopInInboxService.deleteInboxPost(id, user.getId());
+        questionsLifecycleService.deleteQuestion(id, user.getId());
         return ResponseEntity.noContent().build();
 
     }

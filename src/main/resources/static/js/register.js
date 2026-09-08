@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerX = left + width / 2;
         const centerY = top + height / 2;
 
-        // Calculate the deviation (from -1 to 1)
+
         const tiltX = (clientX - centerX) / (window.innerWidth / 2);
         const tiltY = (clientY - centerY) / (window.innerHeight / 2);
 
-        // Smoothly tilt the form towards the cursor
+
         gsap.to(card, {
             duration: 0.6,
             rotationY: tiltX * 12, // Horizontal tilt angle

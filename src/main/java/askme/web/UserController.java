@@ -1,11 +1,10 @@
 package askme.web;
 
 import askme.dto.response.InboxResponse;
-import askme.entity.Post;
 import askme.User;
-import askme.data.PostRepository;
+import askme.data.QuestionRepository;
 import askme.data.UserRepository;
-import askme.service.QuestionsPopInInboxService;
+import askme.service.QuestionsLifecycleService;
 import askme.mapper.InboxMapper;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -18,14 +17,14 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final PostRepository postRepository;
-    private final QuestionsPopInInboxService answeringService;
+    private final QuestionRepository questionRepository;
+    private final QuestionsLifecycleService answeringService;
     private final InboxMapper inboxMapper;
 
 
-    UserController(UserRepository userRepository, PostRepository postRepository, QuestionsPopInInboxService answeringService, InboxMapper inboxMapper) {
+    UserController(UserRepository userRepository, QuestionRepository questionRepository, QuestionsLifecycleService answeringService, InboxMapper inboxMapper) {
         this.userRepository = userRepository;
-        this.postRepository = postRepository;
+        this.questionRepository = questionRepository;
         this.answeringService = answeringService;
         this.inboxMapper = inboxMapper;}
 
@@ -37,7 +36,7 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
 
-        model.addAttribute("posts", postRepository.findByUserIdAndIsAnsweredTrue(userFromDb.getId()));
+        model.addAttribute("posts", questionRepository.findByUserIdAndIsAnsweredTrue(userFromDb.getId()));
         model.addAttribute("user", userFromDb);
 
         List<InboxResponse> unanswered = inboxMapper.toInboxPostResponseList(answeringService.getUnansweredPosts(username));

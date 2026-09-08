@@ -1,11 +1,10 @@
 package askme.service;
 
 import askme.User;
-import askme.data.PostRepository;
+import askme.data.QuestionRepository;
 import askme.data.UserRepository;
-import askme.entity.Post;
+import askme.entity.Question;
 import jakarta.transaction.Transactional;
-import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.access.AccessDeniedException;
@@ -14,26 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class QuestionsPopInInboxService {
+public class QuestionsLifecycleService {
 
     private final UserRepository userRepository;
-    private  PostRepository postRepository ;
+    private  QuestionRepository questionRepository ;
 
-    public QuestionsPopInInboxService(UserRepository userRepository, PostRepository postRepository) {
+    public QuestionsLifecycleService(UserRepository userRepository, QuestionRepository questionRepository) {
         this.userRepository = userRepository;
-        this.postRepository = postRepository;
+        this.questionRepository = questionRepository;
     }
 
-    public List<Post> getUnansweredPosts(String username) {
+    public List<Question> getUnansweredPosts(String username) {
         User user;
-        List<Post> unansweredQuestions  = new ArrayList<>();
+        List<Question> unansweredQuestions  = new ArrayList<>();
         user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Long UserId = user.getId();
-        List<Post> rawPosts = postRepository.findByUserId(UserId);
+        List<Question> rawPosts = questionRepository.findByUserId(UserId);
 
-        for (Post post : rawPosts) {
+        for (Question post : rawPosts) {
             if (Boolean.FALSE.equals(post.getIsAnswered())) {
                 unansweredQuestions.add(rawPosts.get(rawPosts.indexOf(post)));
             }
@@ -43,22 +42,22 @@ public class QuestionsPopInInboxService {
     }
 
     @Transactional
-    public boolean deleteInboxPost(Long id, Long UserId) {
-        Post post = postRepository.findById(id)
+    public boolean deleteQuestion(Long id, Long UserId) {
+        Question post = questionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
 
         if (!post.getUser().getId().equals(UserId)) {
             throw new AccessDeniedException("You are not allowed to delete this post");
         }
-        if (postRepository.existsById(id)) {
-            postRepository.deleteById(id);
+        if (questionRepository.existsById(id)) {
+            questionRepository.deleteById(id);
             return true;
         }
         return false;
     }
     @Transactional
     public void answerQuestion( String answerText, Long postId) {
-        Post post = postRepository.findById(postId)
+        Question post = questionRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
 
         post.setResponse(answerText);

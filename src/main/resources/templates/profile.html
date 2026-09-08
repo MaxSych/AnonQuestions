@@ -115,7 +115,7 @@
                 <div th:if="${#authentication?.name == user?.username}" class="post-menu-container">
                     <button sec:authorize="hasRole('ROLE_USER')" class="btn-post-options">...</button>
                     <div id="post-options-dropdown" class="post-options-dropdown">
-                        <button type="button" class="" data-value="tech">
+                        <button type="button" class="btn-post-delete" data-value="tech" th:data-id="${post.id}">
                             Delete
                         </button>
                     </div>

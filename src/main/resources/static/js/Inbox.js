@@ -1,13 +1,8 @@
-// Variables for storing state
-let currentQuestionId = null;
-
-// Open the modal window
 function openInboxModal() {
     const modal = document.getElementById('inboxModalWindow');
     modal.style.display = 'block';
     document.getElementById('answerSection').style.display = 'none';
     currentQuestionId = null;
-    fetchUnansweredQuestions();
 }
 
 // Close the modal window
@@ -21,6 +16,7 @@ function closeInboxModal() {
 // Close the modal window when clicking outside of it
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('inboxModalWindow');
+
     if (modal) {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -30,42 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
-//Show the answer section
-function showAnswerForm(questionId) {
-    currentQuestionId = questionId;
-    const answerSection = document.getElementById('answerSection');
-    if (answerSection) {
-        answerSection.style.display = 'block';
-    }
-    const answerText = document.getElementById('answerText');
-    if (answerText) {
-        answerText.value = '';
-    }
-
-    // Scroll to the answer section
-    answerSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-function cancelAnswer() {
-    const answerSection = document.getElementById('answerSection');
-    if (answerSection) {
-        answerSection.style.display = 'none';
-    }
-    currentQuestionId = null;
-}
-
-
-// A helper function for HTML escaping
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-
 // Function for deleting a question from an inbox
 document.addEventListener('click', function(e) {
     if (e.target && e.target.classList.contains('btn-delete')) {
@@ -74,7 +34,7 @@ document.addEventListener('click', function(e) {
 
         if (!questionItem || !questionId) return;
 
-        fetch(`/posts/${questionId}/delete`, {
+        fetch(`/questions/${questionId}/delete`, {
             method: 'POST'
         })
             .then(response => {
@@ -85,9 +45,7 @@ document.addEventListener('click', function(e) {
     }
 });
 
-
 //Functions below are responsible for the answering to questions
-// Opens the answer form and stores the ID of the selected question
 function openInboxAnswerForm(questionId) {
     const answerSection = document.getElementById('answerSection');
     const hiddenIdInput = document.getElementById('currentQuestionId');
@@ -109,24 +67,23 @@ function cancelAnswer() {
     const answerText = document.getElementById('answerText');
     const hiddenIdInput = document.getElementById('currentQuestionId');
 
-    // Clear the entered response text
+
     answerText.value = '';
-    // Reset the saved question ID
+
     hiddenIdInput.value = '';
-    // Hide the answer section block
+
     answerSection.style.display = 'none';
 }
 
-// Handles submitting the entered answer to the backend server
 function submitAnswer() {
 
     const questionId = document.getElementById('currentQuestionId').value;
     const text = document.getElementById('answerText').value.trim();
 
-    // Validate that the answer text is not empty
+
     if (!text) {
         alert('Please write an answer before sending.');
-        return; // Abort execution if validation fails
+        return;
     }
 
     // Send an HTTP POST request to the backend API using Fetch
