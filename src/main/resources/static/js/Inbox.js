@@ -34,8 +34,13 @@ document.addEventListener('click', function(e) {
 
         if (!questionItem || !questionId) return;
 
+        const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+
         fetch(`/questions/${questionId}/delete`, {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
         })
             .then(response => {
                 if (response.ok) {
@@ -86,11 +91,15 @@ function submitAnswer() {
         return;
     }
 
+    const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+
     // Send an HTTP POST request to the backend API using Fetch
     fetch(`/posts/${questionId}/answer`, {
         method: 'POST', // HTTP method
         headers: {
-            'Content-Type': 'application/json' // Indicate JSON payload format
+            'Content-Type': 'application/json',
+                ...(csrfHeader && csrfToken ? { [csrfHeader]: csrfToken } : {})
         },
         // Convert the answer object into a JSON string
         body: JSON.stringify({ answer: text })
@@ -99,9 +108,9 @@ function submitAnswer() {
 
             if (response.ok) {
                 cancelAnswer();
-                location.reload(); // Reload the page to update questions list
+                location.reload();
             } else {
-                alert('Failed to send answer.'); // Notify user of server error
+                alert('Failed to send answer.');
             }
         })
         .catch(error => {

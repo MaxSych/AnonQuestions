@@ -48,7 +48,7 @@ public class Autorisation {
 
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/main?logout=true").invalidateHttpSession(true).clearAuthentication(true))
 
-                .csrf(csrf -> csrf.disable())
+                
 
                 .authorizeHttpRequests(auth -> auth
 

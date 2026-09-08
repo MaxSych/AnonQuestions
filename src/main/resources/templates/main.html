@@ -16,7 +16,7 @@
     <div class="glass-card">
         <h2 id="h2-text">Log in</h2>
 
-        <form action="/user_login" method="post" id="loginForm">
+        <form th:action="@{/user_login}" method="post" id="loginForm">
             <input type="text" name="username" placeholder="Username" class="input-field" required>
             <input type="password" name="password" placeholder="Password" class="input-field" required>
 

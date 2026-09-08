@@ -47,17 +47,22 @@ document.addEventListener('click', function(e) {
 
     if (!btn) return;
 
-    const postItem = btn.closest('.post-item');
-    const postId = btn.dataset.id;
+    const questionItem = btn.closest('.post-item');
+    const questionId = btn.dataset.id;
 
-    if (!postItem || !postId) return;
+    if (!questionItem || !questionId) return;
 
-    fetch(`/questions/${postId}/delete`, {
-        method: 'POST'
+    const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+
+    fetch(`/questions/${questionId}/delete`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        }
     })
         .then(response => {
             if (response.ok) {
-                postItem.remove();
+                questionItem.remove();
             }
             });
 

@@ -5,6 +5,8 @@
       lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" th:href="@{/css/profile.css}">
     <link rel="stylesheet" th:href="@{/css/inbox-modal.css}">
     <link rel="stylesheet" th:href="@{/css/settings-modal.css}">
